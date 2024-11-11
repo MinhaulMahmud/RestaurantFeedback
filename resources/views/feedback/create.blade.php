@@ -5,182 +5,161 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Restaurant Feedback</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.min.js" defer></script>
     <style>
-        @keyframes gradient {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+        body {
+            background: linear-gradient(to bottom, #ffe4d6 0%, #ffd1d1 100%);
+            min-height: 100vh;
+            padding: 1rem;
+            font-family: Arial, sans-serif;
         }
-
-        .animated-bg {
-            background: linear-gradient(-45deg, #ff7eb3, #7c3aed, #2dd4bf, #f59e0b);
-            background-size: 400% 400%;
-            animation: gradient 15s ease infinite;
+        .logo-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding: 0 0.5rem;
         }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            25% { transform: translateY(-10px) rotate(-2deg); }
-            75% { transform: translateY(10px) rotate(2deg); }
+        .logo {
+            width: 40px;
+            height: 40px;
+            background: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-
-        .animate-float {
-            animation: float 6s ease-in-out infinite;
+        .logo svg {
+            width: 24px;
+            height: 24px;
+            color: #ff6b6b;
         }
-
-        @keyframes slideIn {
-            from { transform: translateX(-100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
+        .restaurant-name {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: #2c3e50;
         }
-
-        @keyframes scaleIn {
-            from { transform: scale(0.8); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
-        }
-
-        .slide-in {
-            animation: slideIn 0.6s ease-out forwards;
-        }
-
-        .scale-in {
-            animation: scaleIn 0.5s ease-out forwards;
-        }
-
-        .star-rating button {
-            transition: all 0.3s ease;
-        }
-
-        .star-rating button:hover {
-            transform: scale(1.2) rotate(15deg);
-        }
-
-        .glass-effect {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
         .input-field {
-            transition: all 0.3s ease;
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin-top: 0.5rem;
+            margin-bottom: 1rem;
+            background: rgba(255, 255, 255, 0.9);
         }
-
-        .input-field:focus {
-            transform: scale(1.02);
-            box-shadow: 0 0 15px rgba(124, 58, 237, 0.3);
+        .submit-btn {
+            background: #2c3e50;
+            color: white;
+            padding: 0.75rem;
+            border-radius: 8px;
+            width: 100%;;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            cursor: pointer;
         }
-
-        /* Added text shadow for better visibility */
-        .text-shadow {
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        .star-rating {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+        .star {
+            font-size: 1.5rem;
+            color: #ddd;
+            cursor: pointer;
+        }
+        .star.active {
+            color: rgba(184, 24, 88, 0.8) ;
+        }
+        label {
+            color: #2c3e50;
+            font-weight: 500;
         }
     </style>
 </head>
-<body class="animated-bg min-h-screen">
-    <div class="container mx-auto px-4 py-8">
-        <div class="max-w-2xl mx-auto">
-            <!-- Header -->
-            <div class="text-center mb-8 animate-float">
-                <h1 class="text-5xl font-bold text-white mb-2 text-shadow">Share Your Experience!</h1>
-                <p class="text-white text-lg text-shadow">Your opinion matters to us ✨</p>
+<body>
+    <div class="max-w-md mx-auto">
+        <div class="logo-container">
+            <div class="logo">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"/>
+                    <circle cx="12" cy="12" r="3"/>
+                    <line x1="12" y1="2" x2="12" y2="4"/>
+                    <line x1="12" y1="20" x2="12" y2="22"/>
+                    <line x1="2" y1="12" x2="4" y2="12"/>
+                    <line x1="20" y1="12" x2="22" y2="12"/>
+                </svg>
+            </div>
+            <div class="restaurant-name">BROAST BOX</div>
+        </div>
+
+        <div class="text-center mb-8">
+            <h1 class="text-2xl font-bold mb-2">THANK YOU</h1>
+            <p class="text-lg">FOR YOUR FEEDBACK</p>
+        </div>
+
+        <form>
+            <div>
+                <label>Name :-</label>
+                <input type="text" class="input-field" required>
             </div>
 
-            @if(session('success'))
-                <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg relative mb-6 scale-in" role="alert">
-                    <span class="block sm:inline">{{ session('success') }}</span>
+            <div>
+                <label>Email :-</label>
+                <input type="email" class="input-field" required>
+            </div>
+
+            <div>
+                <label>What Did You Order ?</label>
+                <input type="text" class="input-field" required>
+            </div>
+
+            <div>
+                <label class="block text-center mb-2">Rating</label>
+                <div class="star-rating">
+                    <span class="star">☆</span>
+                    <span class="star">☆</span>
+                    <span class="star">☆</span>
+                    <span class="star">☆</span>
+                    <span class="star">☆</span>
                 </div>
-            @endif
+            </div>
 
-            <!-- Feedback Form -->
-            <form action="{{ route('feedback.store') }}" method="POST" 
-                  class="glass-effect rounded-2xl shadow-2xl p-6 md:p-8 scale-in" 
-                  x-data="{ rating: 0 }">
-                @csrf
+            <div>
+                <label>What's Your Feedback ?</label>
+                <textarea class="input-field" rows="3" required></textarea>
+            </div>
 
-                <!-- Name & Email -->
-                <div class="grid md:grid-cols-2 gap-4 mb-6">
-                    <div class="slide-in" style="animation-delay: 0.1s">
-                        <label class="block text-gray-800 text-sm font-bold mb-2" for="name">
-                            Your Name
-                        </label>
-                        <input type="text" name="name" id="name" required
-                               class="input-field w-full px-4 py-3 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 text-gray-800 placeholder-gray-500"
-                               placeholder="John Doe">
-                    </div>
-                    <div class="slide-in" style="animation-delay: 0.2s">
-                        <label class="block text-gray-800 text-sm font-bold mb-2" for="email">
-                            Email Address
-                        </label>
-                        <input type="email" name="email" id="email" required
-                               class="input-field w-full px-4 py-3 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 text-gray-800 placeholder-gray-500"
-                               placeholder="john@example.com">
-                    </div>
-                </div>
+            <div>
+                <label>Suggestion For Improvement !</label>
+                <textarea class="input-field" rows="3"></textarea>
+            </div>
 
-                <!-- Rating -->
-                <div class="mb-6 slide-in" style="animation-delay: 0.3s">
-                    <label class="block text-gray-800 text-sm font-bold mb-2">
-                        Rate Your Experience
-                    </label>
-                    <div class="star-rating flex space-x-3">
-                        <template x-for="i in 5" :key="i">
-                            <button type="button" 
-                                    @click="rating = i" 
-                                    :class="{ 'text-yellow-400': rating >= i, 'text-gray-300': rating < i }"
-                                    class="text-4xl focus:outline-none transition-all duration-300"
-                                    x-text="'★'">
-                            </button>
-                        </template>
-                        <input type="hidden" name="rating" x-model="rating">
-                    </div>
-                </div>
-
-                <!-- Ordered Items -->
-                <div class="mb-6 slide-in" style="animation-delay: 0.4s">
-                    <label class="block text-gray-800 text-sm font-bold mb-2" for="ordered_items">
-                        What Did You Order?
-                    </label>
-                    <textarea name="ordered_items" id="ordered_items" required
-                              class="input-field w-full px-4 py-3 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 text-gray-800 placeholder-gray-500"
-                              rows="2" placeholder="List the items you ordered..."></textarea>
-                </div>
-
-                <!-- Feedback -->
-                <div class="mb-6 slide-in" style="animation-delay: 0.5s">
-                    <label class="block text-gray-800 text-sm font-bold mb-2" for="feedback">
-                        Tell Us More
-                    </label>
-                    <textarea name="feedback" id="feedback" required
-                              class="input-field w-full px-4 py-3 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 text-gray-800 placeholder-gray-500"
-                              rows="3" placeholder="Share your experience with us..."></textarea>
-                </div>
-
-                <!-- Submit Button -->
-                <button type="submit"
-                        class="w-full bg-gradient-to-r from-purple-600 to-pink-500 hover:from-purple-700 hover:to-pink-600 text-white font-bold py-4 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-opacity-50 slide-in"
-                        style="animation-delay: 0.6s">
-                    Send Feedback ✨
-                </button>
-            </form>
-        </div>
+            <button type="submit" class="submit-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="22" y1="2" x2="11" y2="13"></line>
+                    <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                </svg>
+                Submit Feedback
+            </button>
+        </form>
     </div>
 
     <script>
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, { threshold: 0.1 });
-
-        document.addEventListener('DOMContentLoaded', function() {
-            const formElements = document.querySelectorAll('input, textarea, button, .slide-in');
-            formElements.forEach((el) => {
-                el.style.opacity = '0';
-                el.style.transform = 'translateY(20px)';
-                observer.observe(el);
+        const stars = document.querySelectorAll('.star');
+        stars.forEach((star, index) => {
+            star.addEventListener('click', () => {
+                stars.forEach((s, i) => {
+                    if (i <= index) {
+                        s.textContent = '★';
+                        s.classList.add('active');
+                    } else {
+                        s.textContent = '☆';
+                        s.classList.remove('active');
+                    }
+                });
             });
         });
     </script>

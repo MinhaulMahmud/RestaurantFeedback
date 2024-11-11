@@ -6,6 +6,15 @@ use Illuminate\Http\Request;
 use App\Models\Feedback;
 class FeedbackController extends Controller
 {
+    public function home()
+    {
+        return view('home');
+    }
+
+    public function menu(){
+        return view('menu');
+    }
+
     public function create()
     {
         return view('feedback.create');
