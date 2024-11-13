@@ -15,6 +15,7 @@
             font-family: 'Montserrat', sans-serif;
         }
     </style>
+    <title>Broast Box Menu</title>
 </head>
 <body class="bg-pink-50">
     <div class="max-w-md mx-auto min-h-screen pb-20">

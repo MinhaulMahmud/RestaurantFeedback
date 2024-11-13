@@ -52,7 +52,7 @@
             color: white;
             padding: 0.75rem;
             border-radius: 8px;
-            width: 100%;;
+            width: 100%;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -71,7 +71,7 @@
             cursor: pointer;
         }
         .star.active {
-            color: rgba(184, 24, 88, 0.8) ;
+            color: rgba(184, 24, 88, 0.8);
         }
         label {
             color: #2c3e50;
@@ -81,6 +81,7 @@
 </head>
 <body>
     <div class="max-w-md mx-auto">
+        <!-- Logo and Name -->
         <div class="logo-container">
             <div class="logo">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -95,46 +96,58 @@
             <div class="restaurant-name">BROAST BOX</div>
         </div>
 
+        <!-- Header -->
         <div class="text-center mb-8">
             <h1 class="text-2xl font-bold mb-2">THANK YOU</h1>
             <p class="text-lg">FOR YOUR FEEDBACK</p>
         </div>
 
-        <form>
+        <!-- Success Message -->
+        @if(session('success'))
+        <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-6" role="alert">
+            <span class="block sm:inline">{{ session('success') }}</span>
+        </div>
+        @endif
+
+        <!-- Feedback Form -->
+        <form action="{{ route('feedback.store') }}" method="POST">
+            @csrf
+            
             <div>
                 <label>Name :-</label>
-                <input type="text" class="input-field" required>
+                <input type="text" name="name" class="input-field" required>
             </div>
 
             <div>
                 <label>Email :-</label>
-                <input type="email" class="input-field" required>
+                <input type="email" name="email" class="input-field" required>
             </div>
 
             <div>
                 <label>What Did You Order ?</label>
-                <input type="text" class="input-field" required>
+                <input type="text" name="ordered_items" class="input-field" required>
             </div>
 
             <div>
                 <label class="block text-center mb-2">Rating</label>
                 <div class="star-rating">
-                    <span class="star">☆</span>
-                    <span class="star">☆</span>
-                    <span class="star">☆</span>
-                    <span class="star">☆</span>
-                    <span class="star">☆</span>
+                    <span class="star" data-rating="1">☆</span>
+                    <span class="star" data-rating="2">☆</span>
+                    <span class="star" data-rating="3">☆</span>
+                    <span class="star" data-rating="4">☆</span>
+                    <span class="star" data-rating="5">☆</span>
                 </div>
+                <input type="hidden" name="rating" id="rating-value" value="0">
             </div>
 
             <div>
                 <label>What's Your Feedback ?</label>
-                <textarea class="input-field" rows="3" required></textarea>
+                <textarea name="feedback" class="input-field" rows="3" required></textarea>
             </div>
 
             <div>
                 <label>Suggestion For Improvement !</label>
-                <textarea class="input-field" rows="3"></textarea>
+                <textarea name="suggestions" class="input-field" rows="3"></textarea>
             </div>
 
             <button type="submit" class="submit-btn">
@@ -148,11 +161,17 @@
     </div>
 
     <script>
+        // Star rating functionality
         const stars = document.querySelectorAll('.star');
+        const ratingInput = document.getElementById('rating-value');
+        
         stars.forEach((star, index) => {
             star.addEventListener('click', () => {
+                const rating = star.dataset.rating;
+                ratingInput.value = rating;
+                
                 stars.forEach((s, i) => {
-                    if (i <= index) {
+                    if (i < rating) {
                         s.textContent = '★';
                         s.classList.add('active');
                     } else {
